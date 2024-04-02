@@ -36,12 +36,7 @@ export class SearchBoxComponent implements OnInit {
     if (query === '') {
       return of([]);
     }
-    return this.searchHttpService.searchByName(query).pipe(
-      switchMap(results => {
-        this.loading = false;
-        return of(results);
-      })
-    );
+    return this.searchHttpService.searchByName(query);
   }
 
 
