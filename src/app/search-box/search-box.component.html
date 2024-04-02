@@ -1,0 +1,29 @@
+<div class="main-container">
+    <mat-form-field class="search-field">
+      <mat-label>Add to watchlist</mat-label>
+      <input matInput type="text" [(ngModel)]="searchQuery" (input)="searchQuery$.next($event)">
+      <button *ngIf="!searchQuery" matSuffix mat-icon-button>
+        <mat-icon>search</mat-icon>
+      </button>
+      <button *ngIf="searchQuery" matSuffix mat-icon-button (click)="clearSearchQuery()">
+        <mat-icon>close</mat-icon>
+      </button>
+    </mat-form-field>
+
+  
+  <div *ngIf="loading" class="loading-spinner">
+    <mat-spinner diameter="32"></mat-spinner>
+  </div>
+  
+  <mat-accordion *ngIf="searchResults.length > 0" class="search-results">
+    <mat-list>
+      <mat-list-item *ngFor="let stock of searchResults" class="search-results-row"  (click)="addToWatchlist(stock)">
+        <div>
+          <span class="ticker">{{ stock.symbol | uppercase }}</span>           
+          <span class="name" [innerHTML]="stock.companyName"></span>
+        </div>
+      </mat-list-item>
+    </mat-list>
+  </mat-accordion>
+  
+</div>

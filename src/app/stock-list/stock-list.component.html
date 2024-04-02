@@ -1,0 +1,63 @@
+<div class="mat-elevation-z8 content">
+
+  <div *ngIf="loading" class="spinner">
+    <mat-progress-spinner color="primary" mode="indeterminate">
+    </mat-progress-spinner>
+  </div>
+
+  <table mat-table [dataSource]="dataSource" *ngIf="dataSource" matSort>
+
+    <ng-container matColumnDef="symbol">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Symbol </th>
+      <td mat-cell *matCellDef="let stock"> {{ stock.symbol }} ({{ stock.name }})</td>
+    </ng-container>
+
+    <ng-container matColumnDef="price">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Price </th>
+      <td mat-cell *matCellDef="let stock"> {{ stock.price }} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="priceChange">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Price change</th>
+      <td mat-cell *matCellDef="let stock" [ngStyle]="{ color: (stock.priceChange < 0) ? 'red' : 'green' }"> {{
+        stock.priceChange | percent: '1.2' }} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="dividendYield">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Dividend Yield </th>
+      <td mat-cell *matCellDef="let stock"> {{ stock.dividendYield/100 | percent: '1.2'}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="dividendGrowthYears">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Dividend Growth Years </th>
+      <td mat-cell *matCellDef="let stock"> {{ stock.dividendGrowthYears }} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="divGrowth5y">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Dividend Growth 5-Year CAGR </th>
+      <td mat-cell *matCellDef="let stock"> {{ stock.divGrowth5y/100 | percent: '1.2'}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="divGrowth3y">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Dividend Growth 3-Year CAGR </th>
+      <td mat-cell *matCellDef="let stock"> {{ stock.divGrowth3y/100 | percent: '1.2'}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="fcfPayoutRatio">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Free Cash Flow Payout Ratio </th>
+      <td mat-cell *matCellDef="let stock"> {{ stock.fcfPayoutRatio/100 | percent: '1.2'}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="actions">
+      <th mat-header-cell *matHeaderCellDef> Actions </th>
+      <td mat-cell *matCellDef="let stock">
+        <button mat-icon-button color="primary"  (click)="removeFromWatchlist(stock.symbol)">
+          <mat-icon>delete</mat-icon>
+        </button>
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  </table>
+</div>
